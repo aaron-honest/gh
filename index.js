@@ -23,9 +23,9 @@ repo.currentBranch(function( error, branch ) {
       var team = branch_path[0];
       var version = branch_path[1];
       var jiraURL = "";
-      if str.charAt(0).toLowerCase().match(/[a-z]/i)
+      if version.charAt(0).toLowerCase().match(/[a-z]/i)
        // Fix Version
-       jiraURL = "https://honest.atlassian.net/issues/?jql=project%20%3D%20#"+team+"%20AND%20fixVersion%20%3D%20"+branch;
+       jiraURL = "https://honest.atlassian.net/issues/?jql=project%20%3D%20#"+team+"%20AND%20fixVersion%20%3D%20"+version;
       else {
        // Ticket
        jiraURL = "https://honest.atlassian.net/browse/"+team+"-"+version;
