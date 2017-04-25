@@ -25,24 +25,27 @@ repo.currentBranch(function( error, branch ) {
       var jiraURL = "";
       if(version.charAt(0).toLowerCase().match(/[a-z]/i)) {
        // Fix Version
-       jiraURL = "https://honest.atlassian.net/issues/?jql=project%20%3D%20#"+team+"%20AND%20fixVersion%20%3D%20"+version;
-      else {
+       jiraURL = "https://honest.atlassian.net/issues/?jql=project%20%3D%20"+team+"%20AND%20fixVersion%20%3D%20"+branch;
+      } else {
        // Ticket
        jiraURL = "https://honest.atlassian.net/browse/"+team+"-"+version;
       }
-      console.log("Opening "+url.toString());
+      console.log("Opening "+jiraURL);
       return open(jiraURL);
     }
     
     var url = new URL(remotes[0].url);
-    if(url.auth === 'git') {
-      var hostNameAndusername = url.host.split(':');
+    if(url.href.indexOf('@') >= 0) {
+      var hostNameAndusername = url.href.split(':');
       var hostName = hostNameAndusername[0];
-      var username = hostNameAndusername[1];
-      var repoName = url.pathname.split('/')[1].split('.')[0];
+      var usernameAndRepo = hostNameAndusername[1];
+      var usernameAndRepoArray = usernameAndRepo.split('/')
+      var username = usernameAndRepoArray[0];
+      var repoName = usernameAndRepoArray[1].split('.')[0];
       
     } else {
       var username = url.pathname.split('/')[1];
+      console.log(username, url);
       var repoName = url.pathname.split('/')[2].split('.')[0];
       var hostName = url.host;
     }
