@@ -15,6 +15,25 @@ repo.currentBranch(function( error, branch ) {
       console.log('options', options);
     }
     
+    var cmdPath = process.argv[1];
+    var cmdPathArr = cmdPath.split("/");
+    var cmd = cmdPathArr[cmdPathArr.length-1].split("-")[1];
+    if(cmd === 'jira') {
+      var branch_path = branch.split('-');
+      var team = branch_path[0];
+      var version = branch_path[1];
+      var jiraURL = "";
+      if str.charAt(0).toLowerCase().match(/[a-z]/i)
+       // Fix Version
+       jiraURL = "https://honest.atlassian.net/issues/?jql=project%20%3D%20#"+team+"%20AND%20fixVersion%20%3D%20"+branch;
+      else {
+       // Ticket
+       jiraURL = "https://honest.atlassian.net/browse/"+team+"-"+version;
+      }
+      console.log("Opening "+url.toString());
+      return open(jiraURL);
+    }
+    
     var url = new URL(remotes[0].url);
     if(url.auth === 'git') {
       var hostNameAndusername = url.host.split(':');
