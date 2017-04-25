@@ -24,7 +24,7 @@
   "bin": {
     "git-hub": "index.js",
     "git-pr": "index.js",
-    "git-jira": "index.js",
+    "git-jira": "index.js"
   },
   "author": "Aaron Botello",
   "license": "ISC",
